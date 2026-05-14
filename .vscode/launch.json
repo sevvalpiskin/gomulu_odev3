@@ -1,0 +1,36 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "DEBUG (OpenOCD)",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}/build/${workspaceRootFolderName}.elf",
+            "args": [],
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb-multiarch.exe",
+            "setupCommands": [
+                {
+                    "text": "-target-select extended-remote | openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c \"gdb_port pipe; log_output openocd.log\"",
+                    "description": "connect to target",
+                    "ignoreFailures": false
+                }
+            ],
+            "postRemoteConnectCommands": [
+                {
+                    "text": "file build/${workspaceRootFolderName}.elf",
+                    "ignoreFailures": false
+                },
+                {
+                    "text": "load",
+                    "ignoreFailures": false
+                },
+                {
+                    "text": "monitor reset",
+                    "ignoreFailures": false
+                }
+            ]
+        }
+    ]
+}
